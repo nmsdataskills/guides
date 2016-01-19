@@ -12,7 +12,9 @@ This workshop does have some prerequisites.
 For those following along at home, click through the links below to see another one of our guides if you need to get up to speed.
 
 I'm going to assume that you at least know how to do the following:
-- Use [git and GitHub]() for revision control.
+- Use git and GitHub for revision control.
+  * See [Try Git](https://try.github.io/levels/1/challenges/1) if you're entirely new.
+   * See [Ry's Git Tutorial](http://rypress.com/tutorials/git/index) for something more comprehensive.
 - Use a package manager and virtual environments to handle requirements.
   * See `pip` and `virtualenv` for the native Python solutions ([pip](https://pip.pypa.io/en/stable/), [virtualenv](https://virtualenv.readthedocs.org/en/latest/))
   * See `conda` to get both (and much more) in one package ([Documentation](http://conda.pydata.org/docs/index.html), [Cheatsheet](http://conda.pydata.org/docs/_downloads/conda-cheatsheet.pdf))
@@ -20,7 +22,9 @@ I'm going to assume that you at least know how to do the following:
 ## Part 1: What belongs in a project repository?
 Legible code that (preferably) does what a reader expects it does.
 
-A well-maintained, up-to-date [readme file](), including the following:
+A well-maintained, up-to-date [readme file](https://www.ctl.io/developers/blog/post/how-to-write-a-readme-worth-reading), including the following:
+- A concise, clear explanation of what your tool, library, or app does
+- A usage example, if you're writing a library or API
 - Maybe a style guide
 - A brief guide for new contributors in your repository.
 - A link to online documentation.
@@ -44,7 +48,8 @@ If you're not familiar with general Python coding style, read through the follow
 - The [code style](http://docs.python-guide.org/en/latest/writing/style/) section of the Hitchhiker's Guide to Python
 
 ### Contributing Guide
-- If you have one, "Follow our style guide."
+If you're accepting contributions:
+- If you have them, "Follow our style guidelines."
 - Explain the expected workflow for your project's revision control (e.g. "We use GitHub Flow.")
 - Be explicit about expectations regarding things like test coverage ("...and we use Coveralls.io.")
 - List areas where new contributors can be the most helpful!
@@ -88,7 +93,7 @@ def f(splines):
 
     for spline in splines:
         # Reticulate spline
-        pass
+        pass # Avoid IndentationError due to lack of code
 ```
 
 ### Docstrings
