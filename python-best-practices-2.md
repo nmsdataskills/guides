@@ -14,8 +14,8 @@ For those following along at home, click through the links below to see another 
 I'm going to assume that you at least know how to do the following:
 - Use [git and GitHub]() for revision control.
 - Use a package manager and virtual environments to handle requirements.
-  * See `pip` and `virtualenv` for the native Python solutions
-  * See `conda` to get both (and much more) in one package
+  * See `pip` and `virtualenv` for the native Python solutions ([pip](https://pip.pypa.io/en/stable/), [virtualenv](https://virtualenv.readthedocs.org/en/latest/))
+  * See `conda` to get both (and much more) in one package ([Documentation](http://conda.pydata.org/docs/index.html), [Cheatsheet](http://conda.pydata.org/docs/_downloads/conda-cheatsheet.pdf))
 
 ## Part 1: What belongs in a project repository?
 Legible code that (preferably) does what a reader expects it does.
