@@ -1,12 +1,10 @@
-t Practices for Python Projects
+# Best Practices for Python Projects
 **Building Tools to Last**
 
-## About Us
+### About Us
 North Mississippi Data Skills (NMSDS) provides accessible training in professional, open source data workflows and best practices to researchers from various backgrounds.
 - Our workshop materials are available at [github.com/nmsdataskills](github.com/nmsdataskills).
 - Contributions are welcome! (see workshop guidelines)
-
-Ben Elam is a graduate research assistant with the Mississippi State University Department of Forestry.<br>[linkedin.com/in/benelam](linkedin.com/in/benelam)<br>[github.com/eenblam](github.com/eenblam)
 
 ### Prerequisites
 This workshop does have some prerequisites.
@@ -17,9 +15,10 @@ I'm going to assume that you at least know how to do the following:
 - Use [git and GitHub]() for revision control.
 - Use a package manager and virtual environments to handle requirements.
   * See `pip` and `virtualenv` for the native Python solutions
-  * See `conda` to get it both (and much more) in one sweet package
+  * See `conda` to get both (and much more) in one package
 
-## Part 1: What belongs in your repo?
+## Part 1: What belongs in a project repository?
+Other than code, that is. 
 - A good, up to date [readme file]().
 - Maybe a style guide
 - A brief guide for new contributors in your repository.
