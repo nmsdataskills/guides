@@ -18,8 +18,9 @@ I'm going to assume that you at least know how to do the following:
   * See `conda` to get both (and much more) in one package
 
 ## Part 1: What belongs in a project repository?
-Other than code, that is. 
-- A good, up to date [readme file]().
+Legible code that (preferably) does what a reader expects it does.
+
+A well-maintained, up-to-date [readme file](), including the following:
 - Maybe a style guide
 - A brief guide for new contributors in your repository.
 - A link to online documentation.
@@ -28,11 +29,12 @@ Other than code, that is.
   * [Readthedocs.org](https://readthedocs.org) (can be generated)
 
 Finally, you should include everything you need to **automate your build process**:
+- A manifest for your package manager (See prerequisites)
 - Tests and test runner (Part 2 of this talk)
 - Scripts for compiling documentation (Part 3)
 - A master script that does the above, pushes to your remote, and handles any other loose ends when you're ready to commit. (Part 3)
 
-### Style Guide
+### Style Requirements
 - Describe how any code submitted in a pull request should look.
 - Not so common with Python, but it could help maintain order if you tend to have new coders contributing.
 
@@ -44,11 +46,14 @@ If you're not familiar with general Python coding style, read through the follow
 ### Contributing Guide
 - If you have one, "Follow our style guide."
 - Explain the expected workflow for your project's revision control (e.g. "We use GitHub Flow.")
-- Be explicit about expectations regarding things like test coverage.
+- Be explicit about expectations regarding things like test coverage ("...and we use Coveralls.io.")
 - List areas where new contributors can be the most helpful!
 
 <hr>
-What best practices belong in your Contributing guide?
+Okay, so we just discussed some useful information you can include in your repository.
+
+For the rest of the talk, we'll be talking about best practices that you can apply in managing your project as it grows.
+
 We'll come back to this question, so keep it in mind.
 
 To kick things off, let's consider a very simple way of planning out your code.
@@ -57,6 +62,7 @@ To kick things off, let's consider a very simple way of planning out your code.
 Basic idea:
 - Get any boilerplate code out of the way.
 - Write comments, not code, to outline the high-level structure of your document.
+- Not a "best practice" so much as a quick way to get coding
 
 Benefits:
 - Requires you to think about your program or function as a whole before writing any code.
