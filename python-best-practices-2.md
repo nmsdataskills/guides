@@ -6,11 +6,23 @@ North Mississippi Data Skills (NMSDS) provides accessible training in profession
 - Our workshop materials are available at [github.com/nmsdataskills](github.com/nmsdataskills).
 - Contributions are welcome! (see workshop guidelines)
 
+### This Workshop
+1. Writing about your project
+2. Test-driven development
+3. Automate your project management
+
+### Why?
+- Ensure your project will be usable and relevant, even after your postdoc.
+- Enable collaboration while maintaining your sanity.
+- "Untested code is broken code." (old talk by Aspeli & von Weitershausen)
+
 ### Prerequisites
 This workshop does have some prerequisites.
 
-For those following along at home, click through the links below to see another one of our guides if you need to get up to speed.
+For those following along at home,
+click through the links below to see another one of our guides if you need to get up to speed.
 
+<hr>
 I'm going to assume that you at least know how to do the following:
 - Use git and GitHub for revision control.
   * See [Try Git](https://try.github.io/levels/1/challenges/1) if you're entirely new.
@@ -22,16 +34,14 @@ I'm going to assume that you at least know how to do the following:
 ## Part 1: What belongs in a project repository?
 Legible code that (preferably) does what a reader expects it does.
 
-A well-maintained, up-to-date [readme file](https://www.ctl.io/developers/blog/post/how-to-write-a-readme-worth-reading), including the following:
+An up-to-date [readme file](https://www.ctl.io/developers/blog/post/how-to-write-a-readme-worth-reading), including the following:
 - A concise, clear explanation of what your tool, library, or app does
 - A usage example, if you're writing a library or API
 - Maybe a style guide
 - A brief guide for new contributors in your repository.
 - A link to online documentation.
-  * GitHub Pages (can be generated)
-  * GitHub Wiki
-  * [Readthedocs.org](https://readthedocs.org) (can be generated)
 
+<hr>
 Finally, you should include everything you need to **automate your build process**:
 - A manifest for your package manager (See prerequisites)
 - Tests and test runner (Part 2 of this talk)
@@ -57,7 +67,7 @@ If you're accepting contributions:
 <hr>
 Okay, so we just discussed some useful information you can include in your repository.
 
-For the rest of the talk, we'll be talking about best practices that you can apply in managing your project as it grows.
+Now: what best practices can we apply to managing a growing project?
 
 We'll come back to this question, so keep it in mind.
 
@@ -69,6 +79,7 @@ Basic idea:
 - Write comments, not code, to outline the high-level structure of your document.
 - Not a "best practice" so much as a quick way to get coding
 
+<hr>
 Benefits:
 - Requires you to think about your program or function as a whole before writing any code.
 - Allows you to stub out parts of the code that you aren't sure how to implement yet.
