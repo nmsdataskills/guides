@@ -31,6 +31,7 @@ Topics:
     * Factors
 - Generating Mock Data With Random Numbers *(if time allows)*
     * Creating The `newcars` Data Set
+
 ## North Mississippi Data Skills
 We provide accessible training in professional, open-source data workflows and best practices to researchers from various backgrounds.
 
@@ -53,7 +54,7 @@ for providing us with this meeting space.
 First, it's a good idea to tell R where we're working.
 To do so, we use the `setwd` command, which is short for "set working directory."
 ```{r}
-setwd("~/work/projects/nmsds/guides/R_intro/")
+setwd("~/work/nmsds/guides/R_intro/")
 ```
 
 Now, we can load our data:
@@ -118,7 +119,26 @@ rownames(newcars)
 
 ### Visualization With The `plot` Command
 The `newcars` data comes from the `cars` data set that is distributed with R.
-`cars` only has the `speed` and `dist` columns available in `newcars`.
+`cars` only has the `speed`args = commandArgs(trailingOnly=TRUE)
+lines = strsplit(readLines(args[[1]], warn=FALSE), '\n')
+for (line in lines) {
+  if (length(line)) {
+    strings = strsplit(line, ' ')
+    numbers = sapply(strings, as.integer)
+    x = numbers[[1]]
+    y = numbers[[2]]
+    n = numbers[[3]]
+    for (i in (1:n)){
+      if (!(i %% x) & !(i %% y)) {cat("FB")}
+      else if (!(i %% x)) {cat("F")}
+      else if (!(i %% y)) {cat("B")}
+      else cat(i)
+
+      if (i == n) {cat("\n")}
+      else cat(" ")
+    }
+  }
+} and `dist` columns available in `newcars`.
 
 ```{r}
 plot(cars)
@@ -152,16 +172,18 @@ x %% 2 == 0
 ```
 
 ### Subset
+Select only cars with odd speeds:
 ```{r}
 oddcars = subset(newcars, newcars$speed %% 2 == 1)
-oddcars
-```
-
-Example selections
-
-```{r}
+head(oddcars)
 summary(oddcars)
 plot(oddcars$speed, oddcars$dist)
+```
+
+Select only the columns `type` and `speed` for cars with even speeds:
+```{r}
+evenspeeds = subset(newcars, newcars$speed %% 2 == 0, select=c(type, speed))
+head(evenspeeds)
 ```
 
 ### Factors
