@@ -1,4 +1,4 @@
-"speed" "dist" "label"
+"speed" "dist" "type"
 "1" 4 2 4
 "2" 4 10 4
 "3" 7 4 2
