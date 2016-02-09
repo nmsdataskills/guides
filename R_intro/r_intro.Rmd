@@ -119,26 +119,7 @@ rownames(newcars)
 
 ### Visualization With The `plot` Command
 The `newcars` data comes from the `cars` data set that is distributed with R.
-`cars` only has the `speed`args = commandArgs(trailingOnly=TRUE)
-lines = strsplit(readLines(args[[1]], warn=FALSE), '\n')
-for (line in lines) {
-  if (length(line)) {
-    strings = strsplit(line, ' ')
-    numbers = sapply(strings, as.integer)
-    x = numbers[[1]]
-    y = numbers[[2]]
-    n = numbers[[3]]
-    for (i in (1:n)){
-      if (!(i %% x) & !(i %% y)) {cat("FB")}
-      else if (!(i %% x)) {cat("F")}
-      else if (!(i %% y)) {cat("B")}
-      else cat(i)
-
-      if (i == n) {cat("\n")}
-      else cat(" ")
-    }
-  }
-} and `dist` columns available in `newcars`.
+`cars` only has the `speed` and `dist` columns available in `newcars`.
 
 ```{r}
 plot(cars)
