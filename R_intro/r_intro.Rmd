@@ -1,5 +1,5 @@
 ---
-title: "NMDS Workshop1"
+title: "NMSDS Workshop1"
 author: "Ben Elam"
 date: "February 1, 2016"
 output: html_document
@@ -54,7 +54,7 @@ for providing us with this meeting space.
 First, it's a good idea to tell R where we're working.
 To do so, we use the `setwd` command, which is short for "set working directory."
 ```{r}
-setwd("~/work/nmsds/guides/R_intro/")
+setwd("~/work/projects/nmsds/guides/R_intro/")
 ```
 
 Now, we can load our data:
@@ -90,6 +90,36 @@ data = read.table("filename.txt", header=TRUE) # Explicitly tell R to use a head
 data = read.csv("filename.csv") # Assumes a header
 data = read.csv("filename.csv", header=FALSE) # Uses first row as data
 ```
+
+However, the documentation states the following:
+> If missing, the value is determined from the file format: header is set to TRUE if and only if the first row contains one fewer field than the number of columns.
+
+This means that, if you do not provide a value for the `header` parameter,
+R will look to see if you have an index column.
+This would be the case if you had saved dataframe.
+However, if you are loading data for the first time, you may not have an index column yet.
+Suppose `simple.txt` looked like this:
+```
+a b c
+1 2 3
+4 5 6
+```
+
+If you ran `simple = read.table('simple.txt')` without specifying a header, you'd end up with this data frame:
+```
+  V1 V2 V3
+1  a  b  c
+2  1  2  3
+3  4  5  6
+```
+
+Because R coerces data to the most flexible data type involved in an operation (such as creating a vector,)
+the integers are treated as strings.
+Then, because R loads strings as factors (discussed below) by default, we end up with three different factor columns.
+This is almost certainly not what we wanted.
+
+In general, the factor issue can be avoided with `simple = read.table('simple.txt', stringsAsFactors=FALSE)`,
+but specifying `header=TRUE` will handle this particular issue.
 
 For more information on these functions, see the 
 [Data Input](https://stat.ethz.ch/R-manual/R-devel/library/utils/html/read.table.html)
@@ -175,7 +205,6 @@ Suppose we wished to divide the built-in `cars` data set into four types,
 sedan, truck, van, and station wagon, which we label as 1, 2, 3, and 4, respectively.
 ```{r, eval=FALSE}
 set.seed(42)
-newcars = cars
 newcars$type = as.factor(newcars$type)
 table(head(newcars))
 ```
@@ -244,7 +273,7 @@ for their products. You might be interested in:
 - [Using RStudio](http://www.rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf)
 - [RMarkdown Reference](http://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
 - [RMarkdown Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
-- [Data Wrangling with dplyer and tidyr](http://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+- [Data Wrangling with dplyr and tidyr](http://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 - [Visualization with ggplot2](http://www.rstudio.com/wp-content/uploads/2015/12/ggplot2-cheatsheet-2.0.pdf)
 
 ### Learning R
