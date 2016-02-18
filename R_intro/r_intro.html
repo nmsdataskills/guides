@@ -109,11 +109,12 @@ img {
 <div id="thanks" class="section level2">
 <h2>Thanks!</h2>
 <p>We’d like to thank the MSU Mitchell Memorial Library and the MSU Instructional Media Center for providing us with this meeting space.</p>
+<p>In addition, many thanks are owed to those attendees who have patiently attended the early workshops, reviewed materials, and provided valuable feedback. Your support is very much appreciated!</p>
 </div>
 <div id="loading-data" class="section level2">
 <h2>Loading Data</h2>
 <p>First, it’s a good idea to tell R where we’re working. To do so, we use the <code>setwd</code> command, which is short for “set working directory.”</p>
-<pre class="r"><code>setwd(&quot;~/work/projects/nmsds/guides/R_intro/&quot;)</code></pre>
+<pre class="r"><code>setwd(&quot;~/work/nmsds/guides/R_intro/&quot;)</code></pre>
 <p>Now, we can load our data:</p>
 <pre class="r"><code>newcars = read.table(&quot;newcars.txt&quot;)</code></pre>
 <p>The use of <code>setwd</code> can be avoided by giving the full path to <code>newcars.txt</code>, like so:</p>
@@ -132,7 +133,10 @@ img {
 data = read.table(&quot;filename.txt&quot;, header=TRUE) # Explicitly tell R to use a header
 data = read.csv(&quot;filename.csv&quot;) # Assumes a header
 data = read.csv(&quot;filename.csv&quot;, header=FALSE) # Uses first row as data</code></pre>
-<p>However, the documentation states the following: &gt; If missing, the value is determined from the file format: header is set to TRUE if and only if the first row contains one fewer field than the number of columns.</p>
+<p>However, the documentation states the following:</p>
+<blockquote>
+<p>If missing, the value is determined from the file format: header is set to TRUE if and only if the first row contains one fewer field than the number of columns.</p>
+</blockquote>
 <p>This means that, if you do not provide a value for the <code>header</code> parameter, R will look to see if you have an index column. This would be the case if you had saved dataframe. However, if you are loading data for the first time, you may not have an index column yet. Suppose <code>simple.txt</code> looked like this:</p>
 <pre><code>a b c
 1 2 3
@@ -149,59 +153,15 @@ data = read.csv(&quot;filename.csv&quot;, header=FALSE) # Uses first row as data
 </div>
 <div id="data-at-a-glance" class="section level2">
 <h2>Data At A Glance</h2>
-<p>Once a dataframe exists in R, it can be printed to the screen simply by evaluating its name.</p>
-<pre class="r"><code>newcars</code></pre>
-<pre><code>##    speed dist type
-## 1      4    2    4
-## 2      4   10    4
-## 3      7    4    2
-## 4      7   22    4
-## 5      8   16    3
-## 6      9   10    3
-## 7     10   18    3
-## 8     10   26    1
-## 9     10   34    3
-## 10    11   17    3
-## 11    11   28    2
-## 12    12   14    3
-## 13    12   20    4
-## 14    12   24    2
-## 15    12   28    2
-## 16    13   26    4
-## 17    13   34    4
-## 18    13   34    1
-## 19    13   46    2
-## 20    14   26    3
-## 21    14   36    4
-## 22    14   60    1
-## 23    14   80    4
-## 24    15   20    4
-## 25    15   26    1
-## 26    15   54    3
-## 27    16   32    2
-## 28    16   40    4
-## 29    17   32    2
-## 30    17   40    4
-## 31    17   50    3
-## 32    18   42    4
-## 33    18   56    2
-## 34    18   76    3
-## 35    18   84    1
-## 36    19   36    4
-## 37    19   46    1
-## 38    19   68    1
-## 39    20   32    4
-## 40    20   48    3
-## 41    20   52    2
-## 42    20   56    2
-## 43    20   64    1
-## 44    22   66    4
-## 45    23   54    2
-## 46    24   70    4
-## 47    24   92    4
-## 48    24   93    3
-## 49    24  120    4
-## 50    25   85    3</code></pre>
+<p>Once a dataframe exists in R, it can be printed to the screen simply by evaluating its name. However, we’d rather not print out all 50 records. Instead, we’ll use the <code>head()</code> function.</p>
+<pre class="r"><code>head(newcars)</code></pre>
+<pre><code>##   speed dist type
+## 1     4    2    4
+## 2     4   10    4
+## 3     7    4    2
+## 4     7   22    4
+## 5     8   16    3
+## 6     9   10    3</code></pre>
 <p>Get the number of rows in a dataframe:</p>
 <pre class="r"><code>n = nrow(newcars)</code></pre>
 <pre class="r"><code>summary(newcars)</code></pre>

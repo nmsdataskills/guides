@@ -50,11 +50,14 @@ Where to find us:
 We'd like to thank the MSU Mitchell Memorial Library and the MSU Instructional Media Center
 for providing us with this meeting space.
 
+In addition, many thanks are owed to those attendees who have patiently attended the early workshops,
+reviewed materials, and provided valuable feedback. Your support is very much appreciated!
+
 ## Loading Data
 First, it's a good idea to tell R where we're working.
 To do so, we use the `setwd` command, which is short for "set working directory."
 ```{r}
-setwd("~/work/projects/nmsds/guides/R_intro/")
+setwd("~/work/nmsds/guides/R_intro/")
 ```
 
 Now, we can load our data:
@@ -92,6 +95,7 @@ data = read.csv("filename.csv", header=FALSE) # Uses first row as data
 ```
 
 However, the documentation states the following:
+
 > If missing, the value is determined from the file format: header is set to TRUE if and only if the first row contains one fewer field than the number of columns.
 
 This means that, if you do not provide a value for the `header` parameter,
@@ -127,8 +131,9 @@ page in the R manual.
 
 ## Data At A Glance
 Once a dataframe exists in R, it can be printed to the screen simply by evaluating its name.
+However, we'd rather not print out all 50 records. Instead, we'll use the `head()` function.
 ```{r}
-newcars
+head(newcars)
 ```
 
 Get the number of rows in a dataframe:
