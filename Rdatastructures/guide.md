@@ -8,10 +8,10 @@ that work out of the box.
 Many more are available through its primary package library, CRAN.
 This workshop is not about those functions.
 
-On the one hand, some of R's tools can nearly complete your thesis for you.
+On the one hand, some of these tools can nearly complete your thesis for you.
 On the other, they're not worth a lot if your data is in the wrong format.
-This workshop is about developing an understanding of how R represents
-and manipulates data.
+This workshop is about developing an understanding of how R represents data
+in order to efficiently format our data inputs and extract our results.
 
 We'll step through a brief example which will open up some nice questions,
 which we'll then try to provide some rather general answers to.
@@ -40,8 +40,8 @@ Suppose we're interested in the distribution of tree heights.
 ![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png)
 
 Now, we'd like to get the cumulative frequency distribution of the `Height` column.
-We'll want our copy of `trees` to be ordered by the values in the `Height` column.
-We'll also reorder the columns themselves so that `Height` is on the right.
+To do so, we'll want our copy of `trees` to be ordered by `Height.
+We'll also reorder the columns themselves so that `Height` is to the right of the others.
 
 
 ```r
@@ -173,15 +173,14 @@ and perhaps someone used to both systems accidentally made the above error when
 recording data from their lab notebook.
 How does R respond?
 
-- Try to create a data frame
-- Realize the elements of `y` are not homogeneous
-- "8,81" is not a numeric type, so load it as a string
-- Make every element of `y` a string
-- Load string vector as a Factor (unless `stringsAsFactors=F` was used)
+- Try to create a data frame.
+- Realize the elements of `y` are not homogeneous.
+- "8,81" is not a numeric type, so load it as a string.
+- Make every element of `y` a string.
+- Load string vector as a Factor (unless `stringsAsFactors=F` was used.)
 
 Now, we have a data frame with a categorical variable where we expected a
 numerical variable! This is probably not what we wanted.
-
 
 Second, lists do not support **vectorized operations**.
 This is easiest to communicate by example.
@@ -190,19 +189,8 @@ This works:
 
 ```r
 v = c(1, 2, 3)
-v * 2
-```
-
-```
-## [1] 2 4 6
-```
-
-```r
-v + c(3, 2, 1)
-```
-
-```
-## [1] 4 4 4
+v * 2 # Returns c(2, 4, 6)
+v + c(3, 2, 1) # Returns c(4, 4, 4)
 ```
 
 However, this would produce an error:
@@ -210,7 +198,7 @@ However, this would produce an error:
 
 ```r
 l = list(1, 2, 3)
-l * 2
+l * 2 # Error in l * 2 : non-numeric argument to binary operator
 ```
 
 Finally, vectors are flat structures.
@@ -237,7 +225,7 @@ So, how do we access elements of vectors and lists?
 
 ### Named Structures & Structure Preservation
 Both vectors and lists support naming of their elements.
-Data frames, which we'll see shortly, actually enforce naming.
+Data frames, which we'll see shortly, actually enforce naming by default.
 
 
 ```r
@@ -251,73 +239,34 @@ In the cases below, both return the result as a named vector.
 
 
 ```r
-v[1]
-```
-
-```
-## a 
-## 1
-```
-
-```r
-v['a']
-```
-
-```
-## a 
-## 1
+v[1] # Returns c('a' = 1)
+v['a'] # Also returns c('a' = 1)
+v[c('b', 'a')] # Returns c('b' = 2, 'a' = 1)
 ```
 
 If we instead use two pairs of brackets, R will choose the data structure
 that best **simplifies** the organization of the data without
 losing the data itself.
-Now, R only returns a singleton vector.
+The subsetting operations below only return a singleton vectors.
 
 
 ```r
-v[[1]]
-```
-
-```
-## [1] 1
-```
-
-```r
-v[['a']]
-```
-
-```
-## [1] 1
+v[[1]] # Returns 1
+v[['a']] # Returns 1
+v[[c('b', 'a')]] # Error ... : attempt to select more than one element
 ```
 
 The preceding subsetting commands would also work if `v` was a list.
-However, lists have an additional operator - `$` - for accessing named elements
-that is shorthand for using doubled square brackets.
+However, lists have an additional operator -
+`$` - for accessing named elements.
+This symbol is simply shorthand for using doubled square brackets.
 
 ```r
 l = list('x' = c(1, 2), 'y' = c(3, 4))
-l['x'] # Returns a list
-```
-
-```
-## $x
-## [1] 1 2
-```
-
-```r
-l[['x']] # Returns a list of one vector
-```
-
-```
-## [1] 1 2
-```
-
-```r
+l['x'] # Returns list('x' = c(1, 2))
+l[['x']] # Returns c(1, 2)
 l[['y']][2] # Returns 4
-```
-
-```
-## [1] 4
+l$y # Returns c(3, 4)
 ```
 
 ### Arrays
@@ -348,7 +297,7 @@ dim(M) = c(3, 3)
 
 M = array(1:9 * 2, c(3, 3)) # Use the built-in constructor for general arrays
 
-M = matrix(1:9 * 2, ncol=3, nrow=3) # Built-in constructor for matrices.
+M = matrix(1:9 * 2, ncol=3, nrow=3) # Built-in constructor for matrices
 ```
 
 There is certainly more to say about arrays.
@@ -389,8 +338,8 @@ df[c(1, 2), 'characters'] # Get 1st and 2nd row of characters column
 ```
 
 ```
-## [1] p x
-## Levels: p t u x
+## [1] m a
+## Levels: a m r y
 ```
 
 In the last command above,
@@ -406,25 +355,7 @@ With this in mind, it follows that each of the following will extract a column:
 
 
 ```r
-df[, 'numbers']
-```
-
-```
-## [1] 1 2 3 4
-```
-
-```r
-df[['numbers']]
-```
-
-```
-## [1] 1 2 3 4
-```
-
-```r
-df$numbers
-```
-
-```
-## [1] 1 2 3 4
+df[, 'numbers'] # Returns c(1, 2, 3, 4)
+df[['numbers']] # Returns c(1, 2, 3, 4)
+df$numbers # Returns c(1, 2, 3, 4)
 ```
