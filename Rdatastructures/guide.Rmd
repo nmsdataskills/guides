@@ -1,0 +1,278 @@
+---
+title: "R Data Structures"
+author: "Ben Elam"
+output: html_document
+---
+R comes with a number of functions for data analysis and modeling
+that work out of the box.
+Many more are available through its primary package library, CRAN.
+This workshop is not about those functions.
+
+On the one hand, some of R's tools can nearly complete your thesis for you.
+On the other, they're not worth a lot if your data is in the wrong format.
+This workshop is about developing an understanding of how R represents
+and manipulates data.
+
+We'll step through a brief example which will open up some nice questions,
+which we'll then try to provide some rather general answers to.
+
+## A Motivating Example
+Let's do something simple. Let's make a copy of a dataset, `trees`, that ships with R.
+(For a list of all such data sets, enter `data()` in the REPL.)
+
+```{r}
+head(trees)
+```
+
+Suppose we're interested in the distribution of tree heights.
+
+```{r, echo=FALSE}
+ggplot2::qplot(trees$Height, geom="histogram", bins=5) +
+  ggplot2::ggtitle("Trees") +
+  ggplot2::xlab("Height") +
+  ggplot2::ylab("Count")
+```
+
+Now, we'd like to get the cumulative frequency distribution of the `Height` column.
+We'll want our copy of `trees` to be ordered by the values in the `Height` column.
+We'll also reorder the columns themselves so that `Height` is on the right.
+
+```{r}
+df = trees[order(trees$Height), # Reorder rows by Height
+           c('Girth', 'Volume', 'Height')] # Reorder columns as described
+```
+
+This is a fairly simple line of code, but there's still a lot going on!
+
+- We subset the data frame `trees` by both row and column
+using the `[,]` syntax.
+Note that we aren't losing any elements by doing so.
+- We subset a single vector of `trees` using `trees$Height`.
+- We use the `order()` function.
+It returns a vector of the indices of `trees$Height` after they've been sorted,
+**not** the elements themselves.
+This vector defines the row numbers of the new data frame.
+- We provide a vector of column names in the order we prefer.
+
+So, let's glance at what we got back:
+```{r}
+head(df)
+```
+
+Things look good with our data set now, so we're ready to move on.
+
+### Derived Data
+Since the heights are ordered, we can compute their cumulative sums.
+R has a nice built-in function for this - `cumsum()` -
+that does just what we want.
+
+```{r}
+total_height = sum(df$Height)
+df$Height_Cum = cumsum(df$Height)
+df$Height_Prop = df$Height_Cum / total_height
+head(df)
+```
+
+Here, we use a couple of functions - `sum()` and `cumsum()`.
+We also assign two new columns to our data frame.
+
+## Data Structures In Brief
+Wikipedia defines a
+[data structure](https://en.wikipedia.org/wiki/Data_structure) as follows:
+
+> In computer science, a data structure is a particular way of organizing data
+in a computer so that it can be used efficiently.
+
+In R, we're mostly concerned with data structures known as
+vectors, lists, and data frames.
+For particularly computational work,
+an additional structure - an array - is often best.
+However, the flexibility of data frames tends to better suit most analyses.
+
+To understand data frames, it's important to first understand
+the data structures underpinning them.
+
+### Vectors
+R represents sequential collections with **vectors**.
+There are two kinds of vectors: **atomic vectors** and **recursive vectors**.
+Since this terminology is a bit unwieldy,
+atomic vectors are simply called vectors,
+and recursive vectors are called **lists**.
+Similarly, when people talk about vectors,
+they are usually referring to atomic vectors.
+
+While each has a few additional idiosyncrasies,
+there are three differences between vectors and lists that are critical to observe.
+
+First, lists may contain a mixture of data types,
+but all elements of a vector must be of one data type.
+If a vector is created from objects of more than one type,
+then R will coerce all elements to the most flexible type present.
+In terms of flexibility, string > numeric > integer > bool.
+For instance:
+
+```{r}
+v = c(1, 2, 'three')
+typeof(v)
+print(v)
+```
+
+Of course, the above example isn't so likely to occur.
+A recording error during data collection, however, might be a problem.
+Suppose that the following data was loaded with `df = read.table('xy.txt')`:
+```
+x y
+1 2.53
+2 8,81
+3 7.20
+```
+
+The usage of a comma as a decimal delimiter is not uncommon outside of the USA,
+and perhaps someone used to both systems accidentally made the above error when
+recording data from their lab notebook.
+How does R respond?
+
+- Try to create a data frame
+- Realize the elements of `y` are not homogeneous
+- "8,81" is not a numeric type, so load it as a string
+- Make every element of `y` a string
+- Load string vector as a Factor (unless `stringsAsFactors=F` was used)
+
+Now, we have a data frame with a categorical variable where we expected a
+numerical variable! This is probably not what we wanted.
+
+
+Second, lists do not support **vectorized operations**.
+This is easiest to communicate by example.
+This works:
+
+```{r}
+v = c(1, 2, 3)
+v * 2
+v + c(3, 2, 1)
+```
+
+However, this would produce an error:
+
+```{r, eval=FALSE}
+l = list(1, 2, 3)
+l * 2
+```
+
+Finally, vectors are flat structures.
+```{r, eval=FALSE}
+c(c(1, 2), c(3, 4)) # Equivalent to c(1, 2, 3, 4)
+c(c(1, 2), list(3, 4)) # Enforces homogeneity, then flatness. Equivalent to list(1, 2, 3, 4)
+c(list(1, 2), list(3,4)) # Same as above
+```
+
+```{r}
+ll = list(c(1, 2), c(3, 4)) # Exactly what you asked for - a list of two vectors.
+str(ll)
+```
+
+So, how do we access elements of vectors and lists?
+
+### Named Structures & Structure Preservation
+Both vectors and lists support naming of their elements.
+Data frames, which we'll see shortly, actually enforce naming.
+
+```{r}
+v = c('a' = 1, 'b' = 2)
+```
+
+Naming can make accessing our data much nicer.
+Subsetting an object by index or by name using square brackets
+will **preserve** the structure of the original object.
+In the cases below, both return the result as a named vector.
+
+```{r}
+v[1]
+v['a']
+```
+
+If we instead use two pairs of brackets, R will choose the data structure
+that best **simplifies** the organization of the data without
+losing the data itself.
+Now, R only returns a singleton vector.
+
+```{r}
+v[[1]]
+v[['a']]
+```
+
+The preceding subsetting commands would also work if `v` was a list.
+However, lists have an additional operator - `$` - for accessing named elements
+that is shorthand for using doubled square brackets.
+```{r}
+l = list('x' = c(1, 2), 'y' = c(3, 4))
+l['x'] # Returns a list
+l[['x']] # Returns a list of one vector
+l[['y']][2] # Returns 4
+```
+
+### Arrays
+An **array** is a vector with an additional attribute - a dimension - named `dim`.
+This makes it possible to circumvent the flatness property of atomic vectors,
+which have `NULL` dimension.
+An array is effectively a vector that can contain other vectors up to some arbitrary dimension,
+but it's more accurate to say that an array contains other arrays.
+
+A normal atomic vector `v` has dimension `NULL`.
+
+```{r}
+dim(c(1,2,3))
+```
+
+A vector with a `dim` attribute is a one-dimensional (1D) array, and a matrix is a 2D array.
+The following will all produce the same 3x3 matrix:
+
+```{r}
+M = 1:9 * 2
+dim(M) = c(3, 3)
+
+M = array(1:9 * 2, c(3, 3)) # Use the built-in constructor for general arrays
+
+M = matrix(1:9 * 2, ncol=3, nrow=3) # Built-in constructor for matrices.
+```
+
+There is certainly more to say about arrays.
+However, it's sufficient for now to remark that they support vectorized
+operations and enforce homogeneous typing, just like a 1D vector.
+For standard data analysis that doesn't require much in the way
+of linear algebra or physics,
+a more flexible data structure exists in R.
+
+### Data Frames
+A **data frame** is a list of vectors.
+Cross-sections of vectors can be accessed by row names,
+so a data frame functions like a table.
+Naming of columns and rows isn't exactly required,
+but it's recommended.
+
+```{r, eval=FALSE}
+df = read.table('data.txt')
+```
+
+```{r}
+df = data.frame(numbers =  c(1:4), characters = sample(letters, 4))
+df[1] # Get first column
+df[c(1, 2), 'characters'] # Get 1st and 2nd row of characters column
+```
+
+In the last command above,
+we used a single set of square brackets to tell R
+to preserve the structure of the data frame.
+Then, we divided two arguments with a comma.
+The first was a vector of indices specifying rows to select data from,
+and the second was the name of a column to select from.
+Of course, multiple columns can be selected by providing them as a vector,
+as demonstrated in the motivating example.
+
+With this in mind, it follows that each of the following will extract a column:
+
+```{r}
+df[, 'numbers']
+df[['numbers']]
+df$numbers
+```
