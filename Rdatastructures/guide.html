@@ -223,10 +223,9 @@ df</code></pre>
 ## 2 0.1616483
 ## 3 1.1611866
 ## 4 0.3255984</code></pre>
-<pre class="r"><code>df[c(1, 2), c('Characters', 'Numbers')] # Get 1st and 2nd row of Characters column</code></pre>
-<pre><code>##   Characters   Numbers
-## 1          r 0.1994040
-## 2          z 0.1616483</code></pre>
+<pre class="r"><code>df[c(1, 2), 'Characters'] # Get 1st and 2nd row of Characters column</code></pre>
+<pre><code>## [1] r z
+## Levels: k q r z</code></pre>
 <p>In the last command above, we used a single set of square brackets to tell R to preserve the structure of the data frame. Then, we provided two arguments to <code>[]</code>, which we separated with a comma. The first was a vector of indices specifying rows to select data from, and the second was the name of a column to select from. Of course, multiple columns can be selected by providing them as a vector, as demonstrated in the motivating example.</p>
 <p>With this in mind, it follows that each of the following will extract a column:</p>
 <pre class="r"><code>df[, 'numbers'] # Returns c(1, 2, 3, 4)

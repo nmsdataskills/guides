@@ -321,31 +321,46 @@ df = read.table('data.txt')
 
 
 ```r
-df = data.frame(numbers =  c(1:4), characters = sample(letters, 4))
+set.seed(42)
+df = data.frame(Numbers = rweibull(4, 1.5),
+                Counts = sample(1:100, 4, replace=TRUE),
+                Characters = sample(letters, 4))
+df
+```
+
+```
+##     Numbers Counts Characters
+## 1 0.1994040     65          r
+## 2 0.1616483     52          z
+## 3 1.1611866     74          k
+## 4 0.3255984     14          q
+```
+
+```r
 df[1] # Get first column
 ```
 
 ```
-##   numbers
-## 1       1
-## 2       2
-## 3       3
-## 4       4
+##     Numbers
+## 1 0.1994040
+## 2 0.1616483
+## 3 1.1611866
+## 4 0.3255984
 ```
 
 ```r
-df[c(1, 2), 'characters'] # Get 1st and 2nd row of characters column
+df[c(1, 2), 'Characters'] # Get 1st and 2nd row of Characters column
 ```
 
 ```
-## [1] m a
-## Levels: a m r y
+## [1] r z
+## Levels: k q r z
 ```
 
 In the last command above,
 we used a single set of square brackets to tell R
 to preserve the structure of the data frame.
-Then, we divided two arguments with a comma.
+Then, we provided two arguments to `[]`, which we separated with a comma.
 The first was a vector of indices specifying rows to select data from,
 and the second was the name of a column to select from.
 Of course, multiple columns can be selected by providing them as a vector,
