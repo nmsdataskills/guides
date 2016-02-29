@@ -114,17 +114,17 @@ img {
 <div id="loading-data" class="section level2">
 <h2>Loading Data</h2>
 <p>First, it’s a good idea to tell R where we’re working. To do so, we use the <code>setwd</code> command, which is short for “set working directory.”</p>
-<pre class="r"><code>setwd(&quot;~/work/nmsds/guides/R_intro/&quot;)</code></pre>
+<pre class="r"><code>setwd(&quot;~/work/nmsds/guides/R_Intro/&quot;)</code></pre>
 <p>Now, we can load our data:</p>
 <pre class="r"><code>newcars = read.table(&quot;newcars.txt&quot;)</code></pre>
 <p>The use of <code>setwd</code> can be avoided by giving the full path to <code>newcars.txt</code>, like so:</p>
-<pre class="r"><code>newcars = read.table(&quot;~/work/nmsds/guides/R_intro/newcars.txt&quot;)</code></pre>
+<pre class="r"><code>newcars = read.table(&quot;~/work/nmsds/guides/R_Intro/newcars.txt&quot;)</code></pre>
 <p>However, this causes repeated work when accessing the same directory over and over.</p>
 <div id="filepaths" class="section level3">
 <h3>Filepaths</h3>
 <p>On any platform, R adheres to the Unix format of delimiting directories in a pathname by forward slashes - like this <code>/</code>, not like this <code>\</code>.</p>
-<p>This might confuse Windows users, whose filepaths usually look something like <code>C:\Users\ben\work\nmsds\guides\R_intro</code>. To use this filepath in R, you would enter</p>
-<pre class="r"><code>setwd(&quot;C:/Users/ben/work/nmsds/guides/R_intro/&quot;)</code></pre>
+<p>This might confuse Windows users, whose filepaths usually look something like <code>C:\Users\ben\work\nmsds\guides\R_Intro</code>. To use this filepath in R, you would enter</p>
+<pre class="r"><code>setwd(&quot;C:/Users/ben/work/nmsds/guides/R_Intro/&quot;)</code></pre>
 </div>
 <div id="headers" class="section level3">
 <h3>Headers</h3>

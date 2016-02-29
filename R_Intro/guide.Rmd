@@ -9,7 +9,7 @@ output: html_document
 The primary goal of this workshop is to make sure that all attendees
 (new and prior) have a baseline background that can be built upon in future workshops.
 
-Visit [github.com/nmsdataskills/r_basics](https://github.com/nmsdataskills/) to find the latest version of this guide.
+Visit [github.com/nmsdataskills/guide](https://github.com/nmsdataskills/) to view our current guides online.
 You can download the RMarkdown (`.Rmd`) file to play with in RStudio,
 or just download the HTML version of the guide if you only want to read along.
 You'll also want the data to follow along throughout the workshop.
@@ -57,7 +57,7 @@ reviewed materials, and provided valuable feedback. Your support is very much ap
 First, it's a good idea to tell R where we're working.
 To do so, we use the `setwd` command, which is short for "set working directory."
 ```{r}
-setwd("~/work/nmsds/guides/R_intro/")
+setwd("~/work/nmsds/guides/R_Intro/")
 ```
 
 Now, we can load our data:
@@ -67,7 +67,7 @@ newcars = read.table("newcars.txt")
 
 The use of `setwd` can be avoided by giving the full path to `newcars.txt`, like so:
 ```{r, eval=FALSE}
-newcars = read.table("~/work/nmsds/guides/R_intro/newcars.txt")
+newcars = read.table("~/work/nmsds/guides/R_Intro/newcars.txt")
 ```
 
 However, this causes repeated work when accessing the same directory over and over.
@@ -75,9 +75,9 @@ However, this causes repeated work when accessing the same directory over and ov
 ### Filepaths
 On any platform, R adheres to the Unix format of delimiting directories in a pathname by forward slashes - like this `/`, not like this `\`.
 
-This might confuse Windows users, whose filepaths usually look something like `C:\Users\ben\work\nmsds\guides\R_intro`. To use this filepath in R, you would enter
+This might confuse Windows users, whose filepaths usually look something like `C:\Users\ben\work\nmsds\guides\R_Intro`. To use this filepath in R, you would enter
 ```{r, eval=FALSE}
-setwd("C:/Users/ben/work/nmsds/guides/R_intro/")
+setwd("C:/Users/ben/work/nmsds/guides/R_Intro/")
 ```
 
 ### Headers

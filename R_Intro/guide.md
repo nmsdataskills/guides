@@ -61,6 +61,10 @@ To do so, we use the `setwd` command, which is short for "set working directory.
 setwd("~/work/nmsds/guides/R_intro/")
 ```
 
+```
+## Error in setwd("~/work/nmsds/guides/R_intro/"): cannot change working directory
+```
+
 Now, we can load our data:
 
 ```r
