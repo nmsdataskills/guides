@@ -1,0 +1,80 @@
+---
+title: "Clean Up"
+author: "Ben Elam"
+date: "March 1, 2016"
+output: html_document
+---
+First of all, we're going to be really, really unhappy until we break this up into different data sets.
+Remember that problem with missing values becoming strings and strings becoming factors?
+It's happening here!
+
+We have NA values, missing values, and even a value of "Na". This mixed case will be treated as a string, not as an NA value.
+
+```{r}
+set_sp_grp = function(species) {
+  if (species %in% c('Q.stellata', 'Q.alba')) # Post and white
+    return('WhiteOak')
+  else if (species %in% c('Q.shumardii', 'Q.pagoda')) # Shumard and cherrybark
+    return('RedOak')
+  else if (species %in% c('C.ovata', 'C.glabra')) # Shagbark and pignut hickories 
+    return('Carya')
+  else return(NA)
+}
+
+set_sp_grp = Vectorize(set_sp_grp, vectorize.args = 'species')
+
+setwd('~/work/nmsds/guides/showandtell/atf')
+atf = read.csv('ATFMangled.csv',
+               stringsAsFactors = FALSE,
+               na.strings = c('NA', 'Na', '')) # Skip this step and you're gonna have a bad time.
+
+atf$SpGrp = set_sp_grp(atf$Species)
+```
+
+Note that the procedure is the same for all of the ions.
+Just change the column names as appropriate.
+We'll restrict our investigation to the chloride data.
+
+```{r}
+#clnames = c('Date', 'PgTF', 'Species', 'Cl', 'ClER')
+clnames = c('Date', 'Species', 'Cl', 'ClER', 'SpGrp')
+cl = atf[atf$Species != 'precipitation', clnames]
+names(cl)[names(cl) == 'ClER'] = 'ER'
+```
+
+Now, we would like to do the following:
+
+- Split our chloride data set, `cl`, into a list of data frames by date.
+- Remove data frames with NA values.
+- Merge the good data frames back together.
+
+To accomplish this, we'll first write a function that determines
+whether or not a data frame contains an NA entry.
+
+```{r}
+no_NA = function(df) {return(!as.logical(sum(colSums(is.na(df)))))}
+
+cl_dates = split(cl, cl$Date)
+cl_dates_clean = cl_dates[sapply(cl_dates, no_NA, simplify = 'vector')]
+# Because `cl_clean = rbind(cl_dates_clean, make.row.names=FALSE)` is not what we want:
+cl_clean = do.call("rbind", as.list(c(cl_dates_clean, make.row.names=FALSE)))
+```
+
+We can aggregate our species group data easily enough:
+
+```{r}
+sp_grp_er = aggregate(ER ~ Date + SpGrp, cl_clean, mean)
+names(sp_grp_er)[names(sp_grp_er) == 'ER'] = 'ERSpGrp'
+sp_grp_er = sp_grp_er[order(sp_grp_er$Date),]
+sp_grp_er
+```
+
+That's great, but how do we get this data into our `cl_clean` data frame?
+
+```{r}
+merged = merge(cl_clean, sp_grp_er, by = c('Date', 'SpGrp'))
+merged = merged[, c('Date', 'Species', 'Cl', 'ER', 'SpGrp', 'ERSpGrp')]
+head(merged)
+
+#write.csv(merged, 'data/Chloride.csv', row.names = FALSE)
+```
