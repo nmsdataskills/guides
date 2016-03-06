@@ -63,6 +63,7 @@ This vector defines the row numbers of the new data frame.
 
 So, let's glance at what we got back:
 
+
 ```r
 head(df)
 ```
@@ -203,6 +204,7 @@ l * 2 # Error in l * 2 : non-numeric argument to binary operator
 
 Finally, vectors are flat structures.
 
+
 ```r
 c(c(1, 2), c(3, 4)) # Equivalent to c(1, 2, 3, 4)
 c(c(1, 2), list(3, 4)) # Enforces homogeneity, then flatness. Equivalent to list(1, 2, 3, 4)
@@ -260,6 +262,7 @@ The preceding subsetting commands would also work if `v` was a list.
 However, lists have an additional operator -
 `$` - for accessing named elements.
 This symbol is simply shorthand for using doubled square brackets.
+
 
 ```r
 l = list('x' = c(1, 2), 'y' = c(3, 4))
@@ -319,6 +322,8 @@ but it's recommended.
 df = read.table('data.txt')
 ```
 
+We can also generate our data by taking a random sample from various distributions.
+
 
 ```r
 set.seed(42)
@@ -337,7 +342,7 @@ df
 ```
 
 ```r
-df[1] # Get first column
+df[1] # Get a data frame containing only the first column of df
 ```
 
 ```

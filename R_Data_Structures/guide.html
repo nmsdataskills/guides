@@ -207,6 +207,7 @@ M = matrix(1:9 * 2, ncol=3, nrow=3) # Built-in constructor for matrices</code></
 <h3>Data Frames</h3>
 <p>A <strong>data frame</strong> is a list of vectors. Cross-sections of vectors can be accessed by row names, so a data frame functions like a table. Naming of columns and rows isn’t exactly required, but it’s recommended.</p>
 <pre class="r"><code>df = read.table('data.txt')</code></pre>
+<p>We can also generate our data by taking a random sample from various distributions.</p>
 <pre class="r"><code>set.seed(42)
 df = data.frame(Numbers = rweibull(4, 1.5),
                 Counts = sample(1:100, 4, replace=TRUE),
@@ -217,7 +218,7 @@ df</code></pre>
 ## 2 0.1616483     52          z
 ## 3 1.1611866     74          k
 ## 4 0.3255984     14          q</code></pre>
-<pre class="r"><code>df[1] # Get first column</code></pre>
+<pre class="r"><code>df[1] # Get a data frame containing only the first column of df</code></pre>
 <pre><code>##     Numbers
 ## 1 0.1994040
 ## 2 0.1616483
