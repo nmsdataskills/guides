@@ -1,18 +1,18 @@
 ---
-title: "A First Look At R"
+title: "R Intro"
 author: "Ben Elam"
-date: "February 1, 2016"
 output: html_document
 ---
 
 ## This Workshop
 The primary goal of this workshop is to make sure that all attendees
 (new and prior) have a baseline background that can be built upon in future workshops.
+It doesn't assume you know much about how R works,
+but it does assume that you've been in a class that used a little R or have followed a tutorial online.
 
-Visit [github.com/nmsdataskills/r_basics](https://github.com/nmsdataskills/) to find the latest version of this guide.
-You can download the RMarkdown (`.Rmd`) file to play with in RStudio,
-or just download the HTML version of the guide if you only want to read along.
-You'll also want the data to follow along throughout the workshop.
+To follow along, you can view `guide.md` on GitHub,
+but you might get more out of opening up `guide.Rmd` in RStudio.
+This way, you can tweak the code and experiment as you go along.
 
 The files are all pretty small, so you might be happiest downloading the entire "Guides" repository.
 
@@ -32,52 +32,38 @@ Topics:
 - Generating Mock Data With Random Numbers *(if time allows)*
     * Creating The `newcars` Data Set
 
-## North Mississippi Data Skills
-We provide accessible training in professional, open-source data workflows and best practices to researchers from various backgrounds.
-
-Our workshops are designed for students with research projects in mind.
-We assume that your program of study involves some statistical preparation relevant to your research.
-From experience, we also assume that your instructor had to cover a lot statistics,
-and only had so much time to cover professional tools.
-That's where we hope to be of assistance!
-
-Where to find us:
-
-- Hang out with us at [nmsdataskills.slack.com](http://nmsdataskills.slack.com). Currently, anyone with an msstate.edu email address can join the Slack team.
-- Access our content at [github.com/nmsdataskills](http://github.com/nmsdataskills). We're happy to have contributions.
-
-## Thanks!
-We'd like to thank the MSU Mitchell Memorial Library and the MSU Instructional Media Center
-for providing us with this meeting space.
-
-In addition, many thanks are owed to those attendees who have patiently attended the early workshops,
-reviewed materials, and provided valuable feedback. Your support is very much appreciated!
-
 ## Loading Data
 First, it's a good idea to tell R where we're working.
 To do so, we use the `setwd` command, which is short for "set working directory."
-```{r}
-setwd("~/work/nmsds/guides/R_intro/")
-```
+To load the data locally, I would do something like this:
 
-Now, we can load our data:
-```{r}
+```{r, eval=FALSE}
+setwd("~/work/nmsds/guides/R_Intro/")
 newcars = read.table("newcars.txt")
 ```
 
 The use of `setwd` can be avoided by giving the full path to `newcars.txt`, like so:
+
 ```{r, eval=FALSE}
-newcars = read.table("~/work/nmsds/guides/R_intro/newcars.txt")
+newcars = read.table("~/work/nmsds/guides/R_Intro/newcars.txt")
 ```
 
 However, this causes repeated work when accessing the same directory over and over.
 
+We can also load data from the web.
+In fact, this document was created by fetching the data directly from the GitHub repository!
+
+```{r}
+newcars = read.table("https://raw.githubusercontent.com/nmsdataskills/guides/master/R_intro/newcars.txt")
+```
+
 ### Filepaths
 On any platform, R adheres to the Unix format of delimiting directories in a pathname by forward slashes - like this `/`, not like this `\`.
 
-This might confuse Windows users, whose filepaths usually look something like `C:\Users\ben\work\nmsds\guides\R_intro`. To use this filepath in R, you would enter
+This might confuse Windows users, whose filepaths usually look something like `C:\Users\ben\work\nmsds\guides\R_Intro`. To use this filepath in R, you would enter
+
 ```{r, eval=FALSE}
-setwd("C:/Users/ben/work/nmsds/guides/R_intro/")
+setwd("C:/Users/ben/work/nmsds/guides/R_Intro/")
 ```
 
 ### Headers
@@ -103,6 +89,7 @@ R will look to see if you have an index column.
 This would be the case if you had saved dataframe.
 However, if you are loading data for the first time, you may not have an index column yet.
 Suppose `simple.txt` looked like this:
+
 ```
 a b c
 1 2 3
@@ -110,6 +97,7 @@ a b c
 ```
 
 If you ran `simple = read.table('simple.txt')` without specifying a header, you'd end up with this data frame:
+
 ```
   V1 V2 V3
 1  a  b  c
@@ -132,21 +120,21 @@ page in the R manual.
 ## Data At A Glance
 Once a dataframe exists in R, it can be printed to the screen simply by evaluating its name.
 However, we'd rather not print out all 50 records. Instead, we'll use the `head()` function.
+
 ```{r}
 head(newcars)
 ```
 
 Get the number of rows in a dataframe:
-```{r}
-n = nrow(newcars)
-```
 
 ```{r}
+nrow(newcars)
 summary(newcars)
 ```
 
 R has built-in functions for obtaining the names of the rows and columns of a dataframe.
 Usually, rows will be identified by an integer index.
+
 ```{r}
 colnames(newcars)
 rownames(newcars)
@@ -162,11 +150,13 @@ plot(cars)
 
 If we only pass the name of the `newcars` data frame to plot,
 then we actually get a matrix of scatterplots.
+
 ```{r}
 plot(newcars)
 ```
 
 To obtain a plot similar to the first for `newcars`, we can specify the `x` and `y` parameters to `plot`.
+
 ```{r}
 plot(newcars$speed, newcars$dist)
 ```
@@ -181,6 +171,7 @@ From Wikipedia:
 
 In R, we write these values as `TRUE` and `FALSE`, respectively.
 For example, we might wish to know if a particular value is an even integer:
+
 ```{r}
 x = 5
 x %% 2
@@ -189,6 +180,7 @@ x %% 2 == 0
 
 ### Subset
 Select only cars with odd speeds:
+
 ```{r}
 oddcars = subset(newcars, newcars$speed %% 2 == 1)
 head(oddcars)
@@ -197,6 +189,7 @@ plot(oddcars$speed, oddcars$dist)
 ```
 
 Select only the columns `type` and `speed` for cars with even speeds:
+
 ```{r}
 evenspeeds = subset(newcars, newcars$speed %% 2 == 0, select=c(type, speed))
 head(evenspeeds)
@@ -208,6 +201,7 @@ We have a field in `newcars` called `type` for which each row has a value of eit
 However, we'd like to let R know that this is categorical data instead of numerical data.
 Suppose we wished to divide the built-in `cars` data set into four types,
 sedan, truck, van, and station wagon, which we label as 1, 2, 3, and 4, respectively.
+
 ```{r, eval=FALSE}
 set.seed(42)
 newcars$type = as.factor(newcars$type)
@@ -221,6 +215,7 @@ in more detail in an upcoming workshop about R's data structures.
 Don't have your data yet? Not a problem!
 
 R has some nice commands for generating random data. For example:
+
 ```{r, echo=TRUE}
 set.seed(1) # Get rid of this to get a new data set each time.
 runif(4, min=-1, max=1) # Generate 4 random floating point numbers between -1 and 1.
@@ -256,45 +251,7 @@ Notice that it wasn't necessary to specify a full file path when writing my data
 The directory specified above with `setwd` was used.
 If the files need to be stored outside of the current working directory,
 `write.csv` and `write.table` both work fine with full pathnames:
+
 ```{r, eval=FALSE}
 write.csv(newcars, file="~work/nmsds/guides/fake-directory/newcars.csv")
 ```
-
-## Resources
-The first place you should look for anything R-related is the
-[Awesome R](https://github.com/qinwf/awesome-R) collection.
-For similar lists, see [Awesome Awesomeness](https://github.com/bayandin/awesome-awesomeness).
-
-### Getting Set Up
-You can learn about installing R at [CRAN](https://cran.r-project.org/) - the Comprehensive R Archive Network. This presentation was made using
-[RStudio Desktop](https://www.rstudio.com/products/rstudio-desktop/)
-and RMarkdown.
-
-If you're interested in RMarkdown, note that the Pandoc implementation of markdown is used, [as documented here](http://rmarkdown.rstudio.com/authoring_pandoc_markdown.html).
-
-RStudio makes [great reference cards](https://www.rstudio.com/resources/cheatsheets/)
-for their products. You might be interested in:
-
-- [Using RStudio](http://www.rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf)
-- [RMarkdown Reference](http://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
-- [RMarkdown Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
-- [Data Wrangling with dplyr and tidyr](http://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
-- [Visualization with ggplot2](http://www.rstudio.com/wp-content/uploads/2015/12/ggplot2-cheatsheet-2.0.pdf)
-
-### Learning R
-NMSDS be preparing additional workshops on the subject over the next month, so stay tuned.
-
-If you already have some experience with R or another language,
-you can check out the latest version of Hadley Wickham's book,
-[Advanced R](http://adv-r.had.co.nz/), for free online!
-
-For a quick overview, you might like the Learn X in Y Minutes project, which has [an entry on R](https://learnxinyminutes.com/docs/r/).
-
-CodeSchool has some great introductory lessons to things like Git and web development. They're picking up on some other topics, too, [like R](http://tryr.codeschool.com/)!
-
-[Datacamp](https://www.datacamp.com/) is supposed to be pretty good. I can't say I've tried it.
-
-CRAN provides a [reference card](https://cran.r-project.org/doc/contrib/Short-refcard.pdf)
-for the R language.
-
-Of course, you could always just Google "R MOOC"...
