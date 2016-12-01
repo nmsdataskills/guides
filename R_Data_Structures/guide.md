@@ -17,8 +17,9 @@ We'll step through a brief example which will open up some nice questions,
 which we'll then try to provide some rather general answers to.
 
 ## A Motivating Example
-Let's do something simple. Let's make a copy of a dataset, `trees`, that ships with R.
+Let's do something simple. Let's make a copy of a data set, `trees`, that ships with R.
 (For a list of all such data sets, enter `data()` in the REPL.)
+First, let's take a look at the first few records in the data set.
 
 
 ```r
@@ -40,7 +41,7 @@ Suppose we're interested in the distribution of tree heights.
 ![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png)
 
 Now, we'd like to get the cumulative frequency distribution of the `Height` column.
-To do so, we'll want our copy of `trees` to be ordered by `Height.
+To do so, we'll want our copy of `trees` to be ordered by `Height`.
 We'll also reorder the columns themselves so that `Height` is to the right of the others.
 
 
